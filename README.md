@@ -125,7 +125,7 @@
 
 Download our source code:
 ```bash
-git clone https://github.com/huggingface/lerobot.git
+git clone git@github.com:wangrp1997/lerobot.git
 cd lerobot
 ```
 
@@ -137,7 +137,7 @@ conda activate lerobot
 
 When using `miniconda`, install `ffmpeg` in your environment:
 ```bash
-conda install ffmpeg -c conda-forge
+conda install -c conda-forge ffmpeg=6.1.1 -y
 ```
 
 > **NOTE:** This usually installs `ffmpeg 7.X` for your platform compiled with the `libsvtav1` encoder. If `libsvtav1` is not supported (check supported encoders with `ffmpeg -encoders`), you can:
