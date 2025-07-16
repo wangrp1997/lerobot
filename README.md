@@ -120,6 +120,11 @@
 - Thanks to Antonio Loquercio and Ashish Kumar for their early support.
 - Thanks to [Seungjae (Jay) Lee](https://sjlee.cc/), [Mahi Shafiullah](https://mahis.life/) and colleagues for open sourcing [VQ-BeT](https://sjlee.cc/vq-bet/) policy and helping us adapt the codebase to our repository. The policy is adapted from [VQ-BeT repo](https://github.com/jayLEE0301/vq_bet_official).
 
+## Ref
+
+```bash
+https://huggingface.co/docs/lerobot/index
+```
 
 ## Installation
 

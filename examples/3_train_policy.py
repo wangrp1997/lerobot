@@ -31,7 +31,7 @@ from lerobot.policies.diffusion.modeling_diffusion import DiffusionPolicy
 
 def main():
     # Create a directory to store the training checkpoint.
-    output_directory = Path("outputs/train/example_pusht_diffusion")
+    output_directory = Path("outputs/train/example_pusht_diffusion1")
     output_directory.mkdir(parents=True, exist_ok=True)
 
     # # Select your device
@@ -69,16 +69,16 @@ def main():
     }
 
     # In this case with the standard configuration for Diffusion Policy, it is equivalent to this:
-    delta_timestamps = {
-        # Load the previous image and state at -0.1 seconds before current frame,
-        # then load current image and state corresponding to 0.0 second.
-        "observation.image": [-0.1, 0.0],
-        "observation.state": [-0.1, 0.0],
-        # Load the previous action (-0.1), the next action to be executed (0.0),
-        # and 14 future actions with a 0.1 seconds spacing. All these actions will be
-        # used to supervise the policy.
-        "action": [-0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4],
-    }
+    # delta_timestamps = {
+    #     # Load the previous image and state at -0.1 seconds before current frame,
+    #     # then load current image and state corresponding to 0.0 second.
+    #     "observation.image": [-0.1, 0.0],
+    #     "observation.state": [-0.1, 0.0],
+    #     # Load the previous action (-0.1), the next action to be executed (0.0),
+    #     # and 14 future actions with a 0.1 seconds spacing. All these actions will be
+    #     # used to supervise the policy.
+    #     "action": [-0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4],
+    # }
 
     # We can then instantiate the dataset with these delta_timestamps configuration.
     dataset = LeRobotDataset("lerobot/pusht", delta_timestamps=delta_timestamps)
