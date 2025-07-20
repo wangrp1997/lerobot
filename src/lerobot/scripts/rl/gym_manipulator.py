@@ -1810,16 +1810,20 @@ class GymHilDeviceWrapper(gym.Wrapper):
 
 
 class GymHilObservationProcessorWrapper(gym.ObservationWrapper):
-    def __init__(self, env: gym.Env):
+    def __init__(self, env: gym.Env, resize_size=None):  # 添加resize_size参数
         super().__init__(env)
         prev_space = self.observation_space
         new_space = {}
+
+        # 使用配置中的resize_size，如果没有则默认为(128, 128)
+        if resize_size is None:
+            resize_size = (128, 128)
 
         for key in prev_space:
             if "pixels" in key:
                 for k in prev_space["pixels"]:
                     new_space[f"observation.images.{k}"] = gym.spaces.Box(
-                        0.0, 255.0, shape=(3, 128, 128), dtype=np.uint8
+                        0.0, 255.0, shape=(3, resize_size[0], resize_size[1]), dtype=np.uint8
                     )
 
             if key == "agent_pos":
@@ -1860,7 +1864,7 @@ def make_robot_env(cfg: EnvConfig) -> gym.Env:
             use_gripper=cfg.wrapper.use_gripper,
             gripper_penalty=cfg.wrapper.gripper_penalty,
         )
-        env = GymHilObservationProcessorWrapper(env=env)
+        env = GymHilObservationProcessorWrapper(env=env, resize_size=cfg.wrapper.resize_size)
         env = GymHilDeviceWrapper(env=env, device=cfg.device)
         env = BatchCompatibleWrapper(env=env)
         env = TorchActionWrapper(env=env, device=cfg.device)
@@ -1894,7 +1898,7 @@ def make_robot_env(cfg: EnvConfig) -> gym.Env:
             env = EEObservationWrapper(env=env, ee_pose_limits=robot.end_effector_bounds)
 
     env = ConvertToLeRobotObservation(env=env, device=cfg.device)
-
+    
     if cfg.wrapper and cfg.wrapper.crop_params_dict is not None:
         env = ImageCropResizeWrapper(
             env=env,
