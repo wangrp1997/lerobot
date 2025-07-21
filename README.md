@@ -269,6 +269,7 @@ Note: After training your own policy, you can re-evaluate the checkpoints with:
 
 ```bash
 python -m lerobot.scripts.eval --policy.path={OUTPUT_DIR}/checkpoints/last/pretrained_model
+python -m lerobot.scripts.rl.eval_policy --config_path=./configs/eval_config_gym_hil.json
 ```
 
 See `python -m lerobot.scripts.eval --help` for more instructions.
@@ -291,6 +292,7 @@ We provide some pretrained policies on our [hub page](https://huggingface.co/ler
 You can reproduce their training by loading the config from their run. Simply running:
 ```bash
 python -m lerobot.scripts.train --config_path=lerobot/diffusion_pusht
+python -m lerobot.scripts.train   --dataset.repo_id=rpwang/il_gym0   --policy.type=act   --policy.repo_id=rpwang/il_sim_test   --output_dir=outputs/train/il_sim_test   --job_name=il_sim_test   --policy.device=cuda   --wandb.enable=true   --policy.push_to_hub=false
 ```
 reproduces SOTA results for Diffusion Policy on the PushT task.
 

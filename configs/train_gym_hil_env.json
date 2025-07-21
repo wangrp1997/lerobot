@@ -1,6 +1,6 @@
 {    
     "output_dir": null,
-    "job_name": "default",
+    "job_name": "test_hil_botyard",
     "resume": false,
     "seed": 1000,
     "num_workers": 4,
@@ -11,18 +11,18 @@
     "save_freq": 2000,
     "wandb": {
         "enable": true,
-        "project": "franka_sim",
+        "project": "hil_botyard",
         "disable_artifact": true
     },
     "dataset": {
-        "repo_id": "aractingi/franka_sim_pick_lift_6",
+        "repo_id": "rpwang/il_gym1",
         "use_imagenet_stats": false
     },
     "policy": {
         "type": "sac",
         "n_obs_steps": 1,
-        "repo_id": "hf_username/policy_name",
-        "normalization_mapping": {
+        "repo_id": "rpwang/rl_gym1",
+        "normalization_maping": {
             "VISUAL": "MEAN_STD",
             "STATE": "MIN_MAX",
             "ENV": "MIN_MAX",
@@ -33,16 +33,16 @@
                 "type": "VISUAL",
                 "shape": [
                     3,
-                    128,
-                    128
+                    480,
+                    640
                 ]
             },
             "observation.images.wrist": {
                 "type": "VISUAL",
                 "shape": [
                     3,
-                    128,
-                    128
+                    480,
+                    640
                 ]
             },
             "observation.state": {
@@ -178,7 +178,7 @@
             "init_final": 0.05
         },
         "actor_learner_config": {
-            "learner_host": "127.0.0.1",
+            "learner_host": "192.168.0.111",
             "learner_port": 50051,
             "policy_parameters_push_frequency": 4
         },
@@ -198,19 +198,19 @@
             "observation.images.front": [
                 0,
                 0,
-                128,
-                128
+                480,
+                640
             ],
             "observation.images.wrist": [
                 0,
                 0,
-                128,
-                128
+                480,
+                640
             ]
         },
         "resize_size": [
-            128,
-            128
+            480,
+            640
         ],
         "control_time_s": 15.0,
         "fixed_reset_joint_positions": [
@@ -225,16 +225,16 @@
         "reset_time_s": 2.0,
         "control_mode": "keyboard_ee"
     },
-    "name": "franka_sim",
+    "name": "hil_botyard",
     "mode": null,
-    "repo_id": "aractingi/franka_sim_pick_lift_6",
+    "repo_id": "rpwang/il_gym1",
     "dataset_root": null,
     "task": "PandaPickCubeKeyboard-v0",
     "num_episodes": 30,
     "episode": 0,
     "pretrained_policy_name_or_path": null,
     "device": "cuda",
-    "push_to_hub": true,
+    "push_to_hub": false,
     "fps": 10,
     "features": {
         "observation.images.front": {

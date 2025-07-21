@@ -1,0 +1,155 @@
+{
+    "output_dir": "outputs/eval/il_sim_test_dp",
+    "job_name": "il_sim_test_dp",
+    "resume": false,
+    "seed": 1000,
+    "num_workers": 4,
+    "batch_size": 256,
+    "steps": 100000,
+    "log_freq": 500,
+    "save_checkpoint": true,
+    "save_freq": 2000000,
+    "wandb": {
+        "enable": true,
+        "project": "il_sim_test_eval_dp",
+        "disable_artifact": true
+    },
+    "dataset": {
+        "repo_id": "rpwang/il_gym1",
+        "use_imagenet_stats": false
+    },
+    "policy": {
+        "type": "diffusion",
+        "n_obs_steps": 1,
+        "normalization_mapping": {
+            "VISUAL": "MEAN_STD",
+            "STATE": "MEAN_STD",
+            "ACTION": "MEAN_STD"
+        },
+        "input_features": {
+            "observation.state": {
+                "type": "STATE",
+                "shape": [
+                    18
+                ]
+            },
+            "observation.images.front": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            },
+            "observation.images.wrist": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            }
+        },
+        "output_features": {
+            "action": {
+                "type": "ACTION",
+                "shape": [
+                    4
+                ]
+            }
+        },
+        "device": "cuda",
+        "use_amp": false,
+        "n_action_steps": 100,
+        "optimizer_weight_decay": 0.0001
+    },
+    "env": {
+        "type": "hil",
+        "wrapper": {
+            "gripper_penalty": -0.02,
+            "display_cameras": false,
+            "add_joint_velocity_to_observation": true,
+            "add_ee_pose_to_observation": true,
+            "crop_params_dict": {
+                "observation.images.front": [
+                    0,
+                    0,
+                    480,
+                    640
+                ],
+                "observation.images.wrist": [
+                    0,
+                    0,
+                    480,
+                    640
+                ]
+            },
+            "resize_size": [
+                480,
+                640
+            ],
+            "control_time_s": 15.0,
+            "use_gripper": true,
+            "fixed_reset_joint_positions": [
+                0,
+                -1.57, 
+                0,
+                -2.57,
+                0, 
+                2.36,
+                -2.36
+            ],
+            "reset_time_s": 2.0,
+            "control_mode": "keyboard_ee"
+        },
+        "name": "franka_sim",
+        "mode": "eval",
+        "repo_id": "rpwang/il_gym1",
+        "dataset_root": null,
+        "task": "PandaPickCubeKeyboard-v0",
+        "num_episodes": 5,
+        "episode": 0,
+        "pretrained_policy_name_or_path": "./outputs/train/il_sim_test_dp/checkpoints/last/pretrained_model",
+        "device": "cuda",
+        "push_to_hub": false,
+        "fps": 10,
+        "features": {
+            "observation.images.front": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            },
+            "observation.images.wrist": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            },
+            "observation.state": {
+                "type": "STATE",
+                "shape": [
+                    18
+                ]
+            },
+            "action": {
+                "type": "ACTION",
+                "shape": [
+                    4
+                ]
+            }
+        },
+        "features_map": {
+            "observation.images.front": "observation.images.front",
+            "observation.images.wrist": "observation.images.wrist",
+            "observation.state": "observation.state",
+            "action": "action"
+        },
+        "reward_classifier_pretrained_path": null
+    }
+}
+

@@ -89,7 +89,7 @@ class TrainPipelineConfig(HubMixin):
                 )
             policy_path = Path(config_path).parent
             self.policy.pretrained_path = policy_path
-            self.checkpoint_path = policy_path.parent
+            self.checkpoint_path = Path(config_path).parent
 
         if not self.job_name:
             if self.env is None:

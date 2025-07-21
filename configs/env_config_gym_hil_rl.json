@@ -4,7 +4,14 @@
         "gripper_penalty": -0.02,
         "control_time_s": 15.0,
         "use_gripper": true,
-        "fixed_reset_joint_positions": [0.0, 0.195, 0.0, -2.43, 0.0, 2.62, 0.785],
+        "fixed_reset_joint_positions": [
+            0,
+        -1.57, 
+        0,
+        -2.57,
+        0, 
+        2.36,
+        -2.36],
         "control_mode": "keyboard_ee"
     },
     "mode": null,
@@ -23,16 +30,16 @@
             "type": "VISUAL",
             "shape": [
                 3,
-                128,
-                128
+                480,
+                640
             ]
         },
         "observation.images.wrist": {
             "type": "VISUAL",
             "shape": [
                 3,
-                128,
-                128
+                480,
+                640
             ]
         },
         "observation.state": {
