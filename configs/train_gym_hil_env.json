@@ -15,14 +15,14 @@
         "disable_artifact": true
     },
     "dataset": {
-        "repo_id": "rpwang/il_gym1",
+        "repo_id": "rpwang/il_gym3_128",
         "use_imagenet_stats": false
     },
     "policy": {
         "type": "sac",
         "n_obs_steps": 1,
-        "repo_id": "rpwang/rl_gym1",
-        "normalization_maping": {
+        "repo_id": "rpwang/rl_gym3_128",
+        "normalization_mapping": {
             "VISUAL": "MEAN_STD",
             "STATE": "MIN_MAX",
             "ENV": "MIN_MAX",
@@ -33,16 +33,16 @@
                 "type": "VISUAL",
                 "shape": [
                     3,
-                    480,
-                    640
+                    128,
+                    128
                 ]
             },
             "observation.images.wrist": {
                 "type": "VISUAL",
                 "shape": [
                     3,
-                    480,
-                    640
+                    128,
+                    128
                 ]
             },
             "observation.state": {
@@ -155,7 +155,7 @@
         "target_entropy": null,
         "use_backup_entropy": true,
         "grad_clip_norm": 10.0,
-        "num_discrete_actions": 3,
+        "num_discrete_actions": 4,
         "critic_network_kwargs": {
             "hidden_dims": [
                 256,
@@ -198,19 +198,19 @@
             "observation.images.front": [
                 0,
                 0,
-                480,
-                640
+                128,
+                128
             ],
             "observation.images.wrist": [
                 0,
                 0,
-                480,
-                640
+                128,
+                128
             ]
         },
         "resize_size": [
-            480,
-            640
+            128,
+            128
         ],
         "control_time_s": 15.0,
         "fixed_reset_joint_positions": [
@@ -227,7 +227,7 @@
     },
     "name": "hil_botyard",
     "mode": null,
-    "repo_id": "rpwang/il_gym1",
+    "repo_id": "rpwang/il_gym3_128",
     "dataset_root": null,
     "task": "PandaPickCubeKeyboard-v0",
     "num_episodes": 30,

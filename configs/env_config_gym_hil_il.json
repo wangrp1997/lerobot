@@ -9,19 +9,19 @@
             "observation.images.front": [
                 0,
                 0,
-                480,
-                640
+                128,
+                128
             ],
             "observation.images.wrist": [
                 0,
                 0,
-                480,
-                640
+                128,
+                128
             ]
         },
         "resize_size": [
-            480,
-            640
+            128,
+            128
         ],
         "control_time_s": 15.0,
         "use_gripper": true,
@@ -39,10 +39,10 @@
     },
     "name": "franka_sim",
     "mode": "record",
-    "repo_id": "rpwang/il_gym2",
+    "repo_id": "rpwang/il_gym3_128",
     "dataset_root": null,
     "task": "PandaPickCubeKeyboard-v0",
-    "num_episodes": 50,
+    "num_episodes": 30,
     "episode": 0,
     "pretrained_policy_name_or_path": null,
     "device": "cuda",
@@ -53,16 +53,16 @@
             "type": "VISUAL",
             "shape": [
                 3,
-                480,
-                640
+                128,
+                128
             ]
         },
         "observation.images.wrist": {
             "type": "VISUAL",
             "shape": [
                 3,
-                480,
-                640
+                128,
+                128
             ]
         },
         "observation.state": {

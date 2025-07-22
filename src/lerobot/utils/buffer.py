@@ -208,6 +208,9 @@ class ReplayBuffer:
                 # Only store next_states if not optimizing memory
                 self.next_states[key][self.position].copy_(next_state[key].squeeze(dim=0))
 
+        print(f"[DEBUG][buffer.add] buffer expects: {self.actions[self.position].shape}, input action: {action.shape}, value: {action}")
+        assert self.actions[self.position].shape == action.squeeze(dim=0).shape, \
+            f"Shape mismatch! buffer expects {self.actions[self.position].shape}, got {action.shape}"
         self.actions[self.position].copy_(action.squeeze(dim=0))
         self.rewards[self.position] = reward
         self.dones[self.position] = done
