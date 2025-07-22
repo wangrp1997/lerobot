@@ -56,7 +56,7 @@
             "action": {
                 "type": "ACTION",
                 "shape": [
-                    3
+                    4
                 ]
             }
         },
@@ -155,7 +155,7 @@
         "target_entropy": null,
         "use_backup_entropy": true,
         "grad_clip_norm": 10.0,
-        "num_discrete_actions": 4,
+        "num_discrete_actions": null,
         "critic_network_kwargs": {
             "hidden_dims": [
                 256,
@@ -262,7 +262,7 @@
         "action": {
             "type": "ACTION",
             "shape": [
-                3
+                4
             ]
         }
     },
