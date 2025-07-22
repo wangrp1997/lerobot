@@ -278,6 +278,7 @@ def act_with_policy(
             # Time policy inference and check if it meets FPS requirement
             with policy_timer:
                 action = policy.select_action(batch=obs)
+                action[..., -1] = (action[..., -1] + 1)  # 把 [-1, 1] 映射到 [0, 2]
             policy_fps = policy_timer.fps_last
 
             log_policy_frequency_issue(policy_fps=policy_fps, cfg=cfg, interaction_step=interaction_step)
