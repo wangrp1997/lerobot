@@ -1,17 +1,17 @@
-{    
-    "output_dir": null,
+{
+    "output_dir": "outputs/eval/test_hil_botyard",
     "job_name": "test_hil_botyard",
     "resume": false,
     "seed": 1000,
     "num_workers": 4,
     "batch_size": 256,
     "steps": 100000,
-    "log_freq": 1,
+    "log_freq": 500,
     "save_checkpoint": true,
-    "save_freq": 2000,
+    "save_freq": 2000000,
     "wandb": {
         "enable": true,
-        "project": "hil_botyard",
+        "project": "test_hil_botyard",
         "disable_artifact": true
     },
     "dataset": {
@@ -21,7 +21,6 @@
     "policy": {
         "type": "sac",
         "n_obs_steps": 1,
-        "repo_id": "rpwang/rl_gym3_128",
         "normalization_mapping": {
             "VISUAL": "MEAN_STD",
             "STATE": "MIN_MAX",
@@ -29,6 +28,12 @@
             "ACTION": "MIN_MAX"
         },
         "input_features": {
+            "observation.state": {
+                "type": "STATE",
+                "shape": [
+                    18
+                ]
+            },
             "observation.images.front": {
                 "type": "VISUAL",
                 "shape": [
@@ -43,12 +48,6 @@
                     3,
                     128,
                     128
-                ]
-            },
-            "observation.state": {
-                "type": "STATE",
-                "shape": [
-                    18
                 ]
             }
         },
@@ -143,149 +142,95 @@
                     1.0
                 ]
             }
-        },
-        "storage_device": "cpu",
-        "vision_encoder_name": "helper2424/resnet10",
-        "freeze_vision_encoder": true,
-        "image_encoder_hidden_dim": 32,
-        "shared_encoder": true,
-        "online_steps": 1000000,
-        "online_env_seed": 10000,
-        "online_buffer_capacity": 100000,
-        "offline_buffer_capacity": 100000,
-        "online_step_before_learning": 100,
-        "policy_update_freq": 1,
-        "discount": 0.97,
-        "temperature_init": 0.01,
-        "num_critics": 2,
-        "num_subsample_critics": null,
-        "critic_lr": 0.0003,
-        "actor_lr": 0.0003,
-        "temperature_lr": 0.0003,
-        "critic_target_update_weight": 0.005,
-        "utd_ratio": 2,
-        "state_encoder_hidden_dim": 256,
-        "latent_dim": 64,
-        "target_entropy": null,
-        "use_backup_entropy": true,
-        "grad_clip_norm": 10.0,
-        "num_discrete_actions": null,
-        "critic_network_kwargs": {
-            "hidden_dims": [
-                256,
-                256
-            ],
-            "activate_final": true,
-            "final_activation": null
-        },
-        "actor_network_kwargs": {
-            "hidden_dims": [
-                256,
-                256
-            ],
-            "activate_final": true
-        },
-        "policy_kwargs": {
-            "use_tanh_squash": true,
-            "std_min": 1e-5,
-            "std_max": 5,
-            "init_final": 0.05
-        },
-        "actor_learner_config": {
-            "learner_host": "192.168.0.111",
-            "learner_port": 50051,
-            "policy_parameters_push_frequency": 4
-        },
-        "concurrency": {
-            "actor": "threads",
-            "learner": "threads"
         }
     },
     "env": {
-    "type": "hil",
-    "wrapper": {
-        "gripper_penalty": -0.02,
-        "display_cameras": false,
-        "add_joint_velocity_to_observation": true,
-        "add_ee_pose_to_observation": true,
-        "crop_params_dict": {
-            "observation.images.front": [
-                0,
-                0,
+        "type": "hil",
+        "wrapper": {
+            "gripper_penalty": -0.02,
+            "display_cameras": false,
+            "add_joint_velocity_to_observation": true,
+            "add_ee_pose_to_observation": true,
+            "crop_params_dict": {
+                "observation.images.front": [
+                    0,
+                    0,
+                    128,
+                    128
+                ],
+                "observation.images.wrist": [
+                    0,
+                    0,
+                    128,
+                    128
+                ]
+            },
+            "resize_size": [
                 128,
                 128
             ],
-            "observation.images.wrist": [
-                0,
-                0,
-                128,
-                128
-            ]
+            "control_time_s": 15.0,
+            "use_gripper": true,
+            "fixed_reset_joint_positions": [
+                0.0,
+                0.195,
+                0.0,
+                -2.43,
+                0.0,
+                2.62,
+                0.785
+            ],
+            "reset_time_s": 2.0,
+            "control_mode": "keyboard_ee"
         },
-        "resize_size": [
-            128,
-            128
-        ],
-        "control_time_s": 15.0,
-        "fixed_reset_joint_positions": [
-            0.0,
-            0.195,
-            0.0,
-            -2.43,
-            0.0,
-            2.62,
-            0.785
-        ],
-        "reset_time_s": 2.0,
-        "control_mode": "keyboard_ee"
-    },
-    "name": "hil_botyard",
-    "mode": null,
-    "repo_id": "rpwang/il_gym3_128",
-    "dataset_root": null,
-    "task": "PandaPickCubeKeyboard-v0",
-    "num_episodes": 30,
-    "episode": 0,
-    "pretrained_policy_name_or_path": null,
-    "device": "cuda",
-    "push_to_hub": false,
-    "fps": 10,
-    "features": {
-        "observation.images.front": {
-            "type": "VISUAL",
-            "shape": [
-                3,
-                128,
-                128
-            ]
+        "name": "franka_sim",
+        "mode": "eval",
+        "repo_id": "rpwang/il_gym3_128",
+        "dataset_root": null,
+        "task": "PandaPickCubeKeyboard-v0",
+        "num_episodes": 5,
+        "episode": 0,
+        "pretrained_policy_name_or_path": "./outputs/train/2025-07-23/10-32-51_test_hil_botyard/0050000/pretrained_model/",
+        "device": "cuda",
+        "push_to_hub": false,
+        "fps": 10,
+        "features": {
+            "observation.images.front": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    128,
+                    128
+                ]
+            },
+            "observation.images.wrist": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    128,
+                    128
+                ]
+            },
+            "observation.state": {
+                "type": "STATE",
+                "shape": [
+                    18
+                ]
+            },
+            "action": {
+                "type": "ACTION",
+                "shape": [
+                    4
+                ]
+            }
         },
-        "observation.images.wrist": {
-            "type": "VISUAL",
-            "shape": [
-                3,
-                128,
-                128
-            ]
+        "features_map": {
+            "observation.images.front": "observation.images.front",
+            "observation.images.wrist": "observation.images.wrist",
+            "observation.state": "observation.state",
+            "action": "action"
         },
-        "observation.state": {
-            "type": "STATE",
-            "shape": [
-                18
-            ]
-        },
-        "action": {
-            "type": "ACTION",
-            "shape": [
-                4
-            ]
-        }
-    },
-    "features_map": {
-        "observation.images.front": "observation.images.front",
-        "observation.images.wrist": "observation.images.wrist",
-        "observation.state": "observation.state",
-        "action": "action"
-    },
-    "reward_classifier_pretrained_path": null
+        "reward_classifier_pretrained_path": null
+    }
 }
-}
+

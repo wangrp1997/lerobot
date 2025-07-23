@@ -41,6 +41,7 @@ def eval_policy(env, policy, n_episodes):
         episode_reward = 0.0
         while True:
             action = policy.select_action(obs)
+            action[..., -1] = (action[..., -1] + 1)  # 把 [-1, 1] 映射到 [0, 2]
             obs, reward, terminated, truncated, _ = env.step(action)
             episode_reward += reward
             if terminated or truncated:
@@ -64,6 +65,7 @@ def main(cfg: TrainRLServerPipelineConfig):
         # env_cfg=cfg.env,
         ds_meta=dataset_meta,
     )
+
     policy.from_pretrained(env_cfg.pretrained_policy_name_or_path)
     policy.eval()
 

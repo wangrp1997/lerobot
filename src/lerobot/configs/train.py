@@ -78,6 +78,7 @@ class TrainPipelineConfig(HubMixin):
         elif self.resume:
             # The entire train config is already loaded, we just need to get the checkpoint dir
             config_path = parser.parse_arg("config_path")
+            print("DEBUG: config_path =", config_path)
             if not config_path:
                 raise ValueError(
                     f"A config_path is expected when resuming a run. Please specify path to {TRAIN_CONFIG_NAME}"

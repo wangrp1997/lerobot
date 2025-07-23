@@ -288,6 +288,7 @@ def _initialize_stats_buffers(
             if stats and key in stats and "mean" in stats[key] and "std" in stats[key]:
                 mean_data = stats[key]["mean"]
                 std_data = stats[key]["std"]
+
                 if isinstance(mean_data, torch.Tensor):
                     # Note: The clone is needed to make sure that the logic in save_pretrained doesn't see duplicated
                     # tensors anywhere (for example, when we use the same stats for normalization and
@@ -295,6 +296,9 @@ def _initialize_stats_buffers(
                     # https://github.com/huggingface/safetensors/blob/079781fd0dc455ba0fe851e2b4507c33d0c0d407/bindings/python/py_src/safetensors/torch.py#L97.
                     mean = mean_data.clone().to(dtype=torch.float32)
                     std = std_data.clone().to(dtype=torch.float32)
+                elif isinstance(mean_data, np.ndarray):
+                    mean = torch.from_numpy(mean_data).to(dtype=torch.float32)
+                    std = torch.from_numpy(std_data).to(dtype=torch.float32)
                 else:
                     raise ValueError(f"Unsupported stats type for key '{key}' (expected ndarray or Tensor).")
 
@@ -312,6 +316,9 @@ def _initialize_stats_buffers(
                 if isinstance(min_data, torch.Tensor):
                     min_val = min_data.clone().to(dtype=torch.float32)
                     max_val = max_data.clone().to(dtype=torch.float32)
+                elif isinstance(min_data, np.ndarray):
+                    min_val = torch.from_numpy(min_data).to(dtype=torch.float32)
+                    max_val = torch.from_numpy(max_data).to(dtype=torch.float32)
                 else:
                     raise ValueError(f"Unsupported stats type for key '{key}' (expected ndarray or Tensor).")
 
