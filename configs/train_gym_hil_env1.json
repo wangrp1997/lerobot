@@ -14,10 +14,14 @@
         "project": "hil_botyard",
         "disable_artifact": true
     },
+    "dataset": {
+        "repo_id": "rpwang/il_gym3_128",
+        "use_imagenet_stats": false
+    },
     "policy": {
         "type": "sac",
         "n_obs_steps": 1,
-        "repo_id": null,
+        "repo_id": "rpwang/rl_gym3_128",
         "normalization_mapping": {
             "STATE": "MIN_MAX",
             "ENV": "MIN_MAX",
@@ -121,7 +125,7 @@
     },
     "name": "hil_botyard",
     "mode": null,
-    "repo_id": null,
+    "repo_id": "rpwang/rl_gym3_128",
     "dataset_root": null,
     "task": "PandaPickCubeKeyboard-v0",
     "num_episodes": 30,
