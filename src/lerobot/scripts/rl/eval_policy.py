@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import logging
+import time
 
 from lerobot.cameras import opencv  # noqa: F401
 from lerobot.configs import parser
@@ -35,17 +36,28 @@ logging.basicConfig(level=logging.INFO)
 
 
 def eval_policy(env, policy, n_episodes):
+    # 优先从 env 读取 fps，其次 config，再否则默认 10
+    fps = getattr(env, 'fps', None)
+    if fps is None and hasattr(env, 'unwrapped'):
+        fps = getattr(env.unwrapped, 'fps', None)
+    if fps is None:
+        fps = 10
     sum_reward_episode = []
     for _ in range(n_episodes):
         obs, _ = env.reset()
         episode_reward = 0.0
         while True:
+            start_time = time.perf_counter()
             action = policy.select_action(obs)
             action[..., -1] = (action[..., -1] + 1)  # 把 [-1, 1] 映射到 [0, 2]
             obs, reward, terminated, truncated, _ = env.step(action)
             episode_reward += reward
             if terminated or truncated:
                 break
+            # 控制评估速度与训练一致
+            dt_time = time.perf_counter() - start_time
+            sleep_time = max(0, 1 / fps - dt_time)
+            time.sleep(sleep_time)
         sum_reward_episode.append(episode_reward)
 
     logging.info(f"Success after 20 steps {sum_reward_episode}")
