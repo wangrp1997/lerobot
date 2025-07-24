@@ -122,7 +122,7 @@
             }
         },
         "storage_device": "cpu",
-        "vision_encoder_name": "helper2424/resnet10",
+        "vision_encoder_name": null,
         "freeze_vision_encoder": true,
         "image_encoder_hidden_dim": 32,
         "shared_encoder": true,

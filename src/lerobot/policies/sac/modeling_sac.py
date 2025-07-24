@@ -614,6 +614,8 @@ class SACObservationEncoder(nn.Module):
         Returns:
             Dictionary mapping image keys to their corresponding encoded features
         """
+        if not self.image_keys:
+            return {}  # 没有 image 特征时直接返回空字典
         if normalize:
             obs = self.input_normalization(obs)
         batched = torch.cat([obs[k] for k in self.image_keys], dim=0)
