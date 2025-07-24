@@ -1859,7 +1859,7 @@ def make_robot_env(cfg: EnvConfig) -> gym.Env:
         # TODO (azouitine)
         env = gym.make(
             f"gym_hil/{cfg.task}",
-            image_obs=True,
+            image_obs=False,
             render_mode="human",
             use_gripper=cfg.wrapper.use_gripper,
             gripper_penalty=cfg.wrapper.gripper_penalty,

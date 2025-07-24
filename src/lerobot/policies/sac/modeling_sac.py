@@ -501,8 +501,8 @@ class SACObservationEncoder(nn.Module):
         self.image_keys = [k for k in self.config.input_features if is_image_feature(k)]
         self.has_images = bool(self.image_keys)
         if not self.has_images:
+            print("SACObservationEncoder: no image keys, skipping image layers initialization")
             return
-
         if self.config.vision_encoder_name is not None:
             self.image_encoder = PretrainedImageEncoder(self.config)
         else:
@@ -888,12 +888,6 @@ class Policy(nn.Module):
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         # We detach the encoder if it is shared to avoid backprop through it
         # This is important to avoid the encoder to be updated through the policy
-        print("policy encoder input observations keys:", list(observations.keys()))
-        if "observation.images.front" in observations:
-            print("policy encoder got image front, shape:", observations["observation.images.front"].shape)
-        if "observation.images.wrist" in observations:
-            print("policy encoder got image wrist, shape:", observations["observation.images.wrist"].shape)
-            
         obs_enc = self.encoder(observations, cache=observation_features, detach=self.encoder_is_shared)
 
         # Get network outputs

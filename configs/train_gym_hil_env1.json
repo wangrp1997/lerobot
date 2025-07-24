@@ -88,6 +88,18 @@
                     0.6880849599838257
                 ]
             },
+            "observation.environment_state": {
+                "min": [
+                    0.5,
+                    -0.3,
+                    0.52
+                ],
+                "max": [
+                    0.8,
+                    0.3,
+                    0.52
+                ]
+            },
             "action": {
                 "min": [
                     -1.0,
@@ -199,6 +211,12 @@
                 18
             ]
         },
+        "observation.environment_state": {
+            "type": "ENV",
+            "shape": [
+                3
+            ]
+        },
         "action": {
             "type": "ACTION",
             "shape": [
@@ -208,6 +226,7 @@
     },
     "features_map": {
         "observation.state": "observation.state",
+        "observation.environment_state": "observation.environment_state",
         "action": "action"
     },
     "reward_classifier_pretrained_path": null
