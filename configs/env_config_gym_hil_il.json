@@ -39,7 +39,7 @@
     },
     "name": "franka_sim",
     "mode": "record",
-    "repo_id": "rpwang/il_gym3_128",
+    "repo_id": "rpwang/il_gym4_state",
     "dataset_root": null,
     "task": "PandaPickCubeKeyboard-v0",
     "num_episodes": 30,
@@ -71,6 +71,12 @@
                 18
             ]
         },
+        "observation.environment_state": {
+            "type": "ENV",
+            "shape": [
+                3
+            ]
+        },
         "action": {
             "type": "ACTION",
             "shape": [
@@ -82,6 +88,7 @@
         "observation.images.front": "observation.images.front",
         "observation.images.wrist": "observation.images.wrist",
         "observation.state": "observation.state",
+        "observation.environment_state": "observation.environment_state",
         "action": "action"
     },
     "reward_classifier_pretrained_path": null

@@ -1539,6 +1539,7 @@ class GamepadControlWrapper(gym.Wrapper):
         teleop_device,  # Accepts an instantiated teleoperator
         use_gripper=False,  # This should align with teleop_device's config
         auto_reset=False,
+        mode="record",
     ):
         """
         Initialize the gamepad controller wrapper.
@@ -1715,6 +1716,7 @@ class KeyboardControlWrapper(GamepadControlWrapper):
         teleop_device,  # Accepts an instantiated teleoperator
         use_gripper=False,  # This should align with teleop_device's config
         auto_reset=False,
+        mode="record",
     ):
         """
         Initialize the gamepad controller wrapper.
@@ -1828,6 +1830,7 @@ class GymHilObservationProcessorWrapper(gym.ObservationWrapper):
 
             if key == "agent_pos":
                 new_space["observation.state"] = prev_space["agent_pos"]
+                new_space["observation.environment_state"] = prev_space["environment_state"]
 
         self.observation_space = gym.spaces.Dict(new_space)
 
@@ -1859,6 +1862,7 @@ def make_robot_env(cfg: EnvConfig) -> gym.Env:
         # TODO (azouitine)
         env = gym.make(
             f"gym_hil/{cfg.task}",
+            mode=cfg.mode,
             image_obs=False,
             render_mode="human",
             use_gripper=cfg.wrapper.use_gripper,
@@ -2037,6 +2041,11 @@ def record_dataset(env, policy, cfg):
         "observation.state": {
             "dtype": "float32",
             "shape": env.observation_space["observation.state"].shape,
+            "names": None,
+        },
+        "observation.environment_state": {
+            "dtype": "float32",
+            "shape": env.observation_space["observation.environment_state"].shape,
             "names": None,
         },
         "action": {
