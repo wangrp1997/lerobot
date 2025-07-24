@@ -4,7 +4,7 @@ from lerobot.datasets.utils import write_stats, load_episodes_stats
 from lerobot.datasets.compute_stats import aggregate_stats
 
 # 1. 设置你的 meta 目录路径
-meta_dir = Path(os.path.expanduser("~/.cache/huggingface/lerobot/rpwang/il_gym3_128"))
+meta_dir = Path(os.path.expanduser("~/.cache/huggingface/lerobot/rpwang/il_gym4_state"))
 
 # 2. 读取所有 episode 的统计
 episodes_stats = load_episodes_stats(meta_dir)
