@@ -131,7 +131,7 @@
         "online_buffer_capacity": 100000,
         "offline_buffer_capacity": 100000,
         "online_step_before_learning": 100,
-        "policy_update_freq": 4,
+        "policy_update_freq": 50,
         "discount": 0.97,
         "temperature_init": 0.01,
         "num_critics": 2,
@@ -171,7 +171,7 @@
         "actor_learner_config": {
             "learner_host": "192.168.0.111",
             "learner_port": 50051,
-            "policy_parameters_push_frequency": 4
+            "policy_parameters_push_frequency": 50
         },
         "concurrency": {
             "actor": "threads",
