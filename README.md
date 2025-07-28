@@ -304,6 +304,7 @@ You can reproduce their training by loading the config from their run. Simply ru
 
 ```bash
 python -m lerobot.scripts.train --config_path=lerobot/diffusion_pusht
+python -m lerobot.scripts.train --config_path=configs/train_pusht_config.json --policy.push_to_hub=false
 python -m lerobot.scripts.train   --dataset.repo_id=rpwang/il_gym0   --policy.type=act   --policy.repo_id=rpwang/il_sim_test   --output_dir=outputs/train/il_sim_test   --job_name=il_sim_test   --policy.device=cuda   --wandb.enable=true   --policy.push_to_hub=false
 ```
 
