@@ -39,7 +39,7 @@
     },
     "name": "franka_sim",
     "mode": "record",
-    "repo_id": "rpwang/il_gym4_state",
+    "repo_id": "rpwang/il_gym4_state-1",
     "dataset_root": null,
     "task": "PandaPickCubeKeyboard-v0",
     "num_episodes": 30,

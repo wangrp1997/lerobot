@@ -1830,7 +1830,7 @@ class GymHilObservationProcessorWrapper(gym.ObservationWrapper):
 
             if key == "agent_pos":
                 new_space["observation.state"] = prev_space["agent_pos"]
-                new_space["observation.environment_state"] = prev_space["environment_state"]
+                # new_space["observation.environment_state"] = prev_space["environment_state"]
 
         self.observation_space = gym.spaces.Dict(new_space)
 
@@ -1863,7 +1863,7 @@ def make_robot_env(cfg: EnvConfig) -> gym.Env:
         env = gym.make(
             f"gym_hil/{cfg.task}",
             mode=cfg.mode,
-            image_obs=False,
+            image_obs=True,
             render_mode="human",
             use_gripper=cfg.wrapper.use_gripper,
             gripper_penalty=cfg.wrapper.gripper_penalty,

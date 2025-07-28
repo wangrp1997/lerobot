@@ -24,7 +24,6 @@
         "normalization_mapping": {
             "VISUAL": "MEAN_STD",
             "STATE": "MIN_MAX",
-            "ENV": "MIN_MAX",
             "ACTION": "MIN_MAX"
         },
         "input_features": {
@@ -128,6 +127,18 @@
                     0.6880849599838257
                 ]
             },
+            "observation.environment_state": {
+                "min": [
+                    0.42000406980514526,
+                    -0.28033486008644104,
+                    0.5188397169113159
+                ],
+                "max": [
+                    0.7655463218688965,
+                    0.2760476768016815,
+                    0.6449044346809387
+                ]
+            },
             "action": {
                 "min": [
                     -1.0,
@@ -190,7 +201,7 @@
         "task": "PandaPickCubeKeyboard-v0",
         "num_episodes": 5,
         "episode": 0,
-        "pretrained_policy_name_or_path": "./outputs/train/2025-07-23/10-32-51_test_hil_botyard/0050000/pretrained_model/",
+        "pretrained_policy_name_or_path": "./outputs/train/2025-07-23/10-32-51_test_hil_botyard/last/pretrained_model/",
         "device": "cuda",
         "push_to_hub": false,
         "fps": 10,
