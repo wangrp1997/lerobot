@@ -49,7 +49,7 @@ def eval_policy(env, policy, n_episodes):
         while True:
             start_time = time.perf_counter()
             action = policy.select_action(obs)
-            action[..., -1] = (action[..., -1] + 1)  # 把 [-1, 1] 映射到 [0, 2]
+            # action[..., -1] = (action[..., -1] + 1)  # 把 [-1, 1] 映射到 [0, 2]
             obs, reward, terminated, truncated, _ = env.step(action)
             episode_reward += reward
             if terminated or truncated:
@@ -60,7 +60,7 @@ def eval_policy(env, policy, n_episodes):
             time.sleep(sleep_time)
         sum_reward_episode.append(episode_reward)
 
-    logging.info(f"Success after 20 steps {sum_reward_episode}")
+    logging.info(f"Success after 10 steps {sum_reward_episode}")
     logging.info(f"success rate {sum(sum_reward_episode) / len(sum_reward_episode)}")
 
 

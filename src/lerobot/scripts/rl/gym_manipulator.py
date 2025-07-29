@@ -1818,11 +1818,13 @@ class GymHilObservationProcessorWrapper(gym.ObservationWrapper):
         prev_space = self.observation_space
         new_space = {}
 
+
         # 使用配置中的resize_size，如果没有则默认为(128, 128)
         if resize_size is None:
             resize_size = (128, 128)
 
         for key in prev_space:
+
             if "pixels" in key:
                 for k in prev_space["pixels"]:
                     new_space[f"observation.images.{k}"] = gym.spaces.Box(
@@ -1831,7 +1833,9 @@ class GymHilObservationProcessorWrapper(gym.ObservationWrapper):
 
             if key == "agent_pos":
                 new_space["observation.state"] = prev_space["agent_pos"]
-                # new_space["observation.environment_state"] = prev_space["environment_state"]
+
+            if key == "environment_state":
+                new_space["observation.environment_state"] = prev_space["environment_state"]
 
         self.observation_space = gym.spaces.Dict(new_space)
 
@@ -1863,7 +1867,7 @@ def make_robot_env(cfg: EnvConfig) -> gym.Env:
         # TODO (azouitine)
         env = gym.make(
             f"gym_hil/{cfg.task}",
-            mode=cfg.mode,
+            # mode=cfg.mode,
             image_obs=True,
             render_mode="human",
             use_gripper=cfg.wrapper.use_gripper,
@@ -2038,30 +2042,51 @@ def record_dataset(env, policy, cfg):
         action_names.append("gripper_delta")
 
     # Configure dataset features based on environment spaces
-    features = {
-        "observation.state": {
-            "dtype": "float32",
-            "shape": env.observation_space["observation.state"].shape,
-            "names": None,
-        },
-        "observation.environment_state": {
-            "dtype": "float32",
-            "shape": env.observation_space["observation.environment_state"].shape,
-            "names": None,
-        },
-        "action": {
-            "dtype": "float32",
-            "shape": (len(action_names),),
-            "names": action_names,
-        },
-        "next.reward": {"dtype": "float32", "shape": (1,), "names": None},
-        "next.done": {"dtype": "bool", "shape": (1,), "names": None},
-        "complementary_info.discrete_penalty": {
-            "dtype": "float32",
-            "shape": (1,),
-            "names": ["discrete_penalty"],
-        },
-    }
+    if env.image_obs:
+                features = {
+            "observation.state": {
+                "dtype": "float32",
+                "shape": env.observation_space["observation.state"].shape,
+                "names": None,
+            },
+            "action": {
+                "dtype": "float32",
+                "shape": (len(action_names),),
+                "names": action_names,
+            },
+            "next.reward": {"dtype": "float32", "shape": (1,), "names": None},
+            "next.done": {"dtype": "bool", "shape": (1,), "names": None},
+            "complementary_info.discrete_penalty": {
+                "dtype": "float32",
+                "shape": (1,),
+                "names": ["discrete_penalty"],
+            },
+        }
+    else:
+        features = {
+            "observation.state": {
+                "dtype": "float32",
+                "shape": env.observation_space["observation.state"].shape,
+                "names": None,
+            },
+            "observation.environment_state": {
+                "dtype": "float32",
+                "shape": env.observation_space["observation.environment_state"].shape,
+                "names": None,
+            },
+            "action": {
+                "dtype": "float32",
+                "shape": (len(action_names),),
+                "names": action_names,
+            },
+            "next.reward": {"dtype": "float32", "shape": (1,), "names": None},
+            "next.done": {"dtype": "bool", "shape": (1,), "names": None},
+            "complementary_info.discrete_penalty": {
+                "dtype": "float32",
+                "shape": (1,),
+                "names": ["discrete_penalty"],
+            },
+        }
 
     # Add image features
     for key in env.observation_space:

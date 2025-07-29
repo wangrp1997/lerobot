@@ -1,6 +1,6 @@
 {
     "output_dir": null,
-    "job_name": "default",
+    "job_name": "il_sim_act",
     "resume": false,
     "seed": 1000,
     "num_workers": 4,
@@ -11,15 +11,15 @@
     "save_freq": 20000,
     "wandb": {
         "enable": true,
-        "project": "lerobot",
+        "project": "il_sim_act",
         "disable_artifact": true
     },
     "dataset": {
-        "repo_id": "rpwang/franka_sim_pick_lift_1",
-        "use_imagenet_stats": false
+        "repo_id": "rpwang/franka_sim_pick_lift_0",
+        "use_imagenet_stats": true
     },
     "policy": {
-        "type": "diffusion",
+        "type": "act",
         "n_obs_steps": 1,
         "normalization_mapping": {
             "VISUAL": "MEAN_STD",
@@ -60,9 +60,27 @@
         },
         "device": "cuda",
         "use_amp": false,
-        "n_action_steps": 100,
+        "chunk_size": 20,
+        "n_action_steps": 20,
         "vision_backbone": "resnet18",
-        "pretrained_backbone_weights": null
+        "pretrained_backbone_weights": "ResNet18_Weights.IMAGENET1K_V1",
+        "replace_final_stride_with_dilation": false,
+        "pre_norm": false,
+        "dim_model": 512,
+        "n_heads": 8,
+        "dim_feedforward": 3200,
+        "feedforward_activation": "relu",
+        "n_encoder_layers": 4,
+        "n_decoder_layers": 1,
+        "use_vae": true,
+        "latent_dim": 32,
+        "n_vae_encoder_layers": 4,
+        "temporal_ensemble_coeff": null,
+        "dropout": 0.1,
+        "kl_weight": 10.0,
+        "optimizer_lr": 1e-05,
+        "optimizer_weight_decay": 0.0001,
+        "optimizer_lr_backbone": 1e-05
     },
     "env": {
         "type": "hil",
@@ -105,12 +123,12 @@
         },
         "name": "franka_sim",
         "mode": "eval",
-        "repo_id": "rpwang/franka_sim_pick_lift_1",
+        "repo_id": "rpwang/franka_sim_pick_lift_0",
         "dataset_root": null,
         "task": "PandaPickCubeKeyboard-v0",
         "num_episodes": 100,
         "episode": 0,
-        "pretrained_policy_name_or_path": "outputs/train/il_test_dp_2/checkpoints/020000/pretrained_model/",
+        "pretrained_policy_name_or_path": "outputs/train/il_test_act/checkpoints/last/pretrained_model/",
         "device": "cuda",
         "push_to_hub": false,
         "fps": 10,
