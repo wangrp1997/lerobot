@@ -31,7 +31,7 @@ from lerobot.policies.diffusion.modeling_diffusion import DiffusionPolicy
 
 def main():
     # Create a directory to store the training checkpoint.
-    output_directory = Path("outputs/train/example_pusht_diffusion1")
+    output_directory = Path("outputs/train/example_pusht_diffusion")
     output_directory.mkdir(parents=True, exist_ok=True)
 
     # # Select your device
